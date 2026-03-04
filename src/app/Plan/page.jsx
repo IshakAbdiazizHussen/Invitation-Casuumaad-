@@ -41,12 +41,12 @@ export default function Plan({ onPlanSelect }) {
 
   return (
     <div>
-      <section className='mt-20 px-4 text-center sm:px-6 lg:px-8'>
+      <section className='mt-20 px-4 text-center sm:px-6 lg:px-8 animate-enter'>
         <h1 className='text-3xl font-bold sm:text-4xl'>Simple, <span className='text-emerald-800'>Affordable Pricing</span></h1>
         <p className='mt-2 text-gray-600'>Choose a plan and activate it instantly.</p>
       </section>
 
-      <div className='mt-8 flex flex-col items-center gap-8 lg:flex-row lg:justify-center lg:gap-10'>
+      <div className='mt-8 flex flex-col items-center gap-8 lg:flex-row lg:justify-center lg:gap-10 animate-enter-delay-1'>
         {plans.map((plan) => {
           const isActive = activePlanId === plan.id;
           return (
@@ -60,7 +60,7 @@ export default function Plan({ onPlanSelect }) {
                   setActivePlanId(plan.id);
                   onPlanSelect?.(plan.id);
                 }}
-                className={`w-full min-h-[28rem] rounded-2xl border bg-white p-8 text-left shadow-2xl transition-all hover:shadow-xl ${
+                className={`w-full min-h-[28rem] rounded-2xl border bg-white p-8 text-left shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
                   isActive ? "border-2 border-emerald-400 ring-2 ring-emerald-200" : "border-gray-100"
                 }`}
               >
@@ -87,7 +87,7 @@ export default function Plan({ onPlanSelect }) {
         })}
       </div>
 
-      <section className="mx-auto mt-8 w-full max-w-4xl rounded-2xl border border-emerald-200 bg-white p-6 shadow-lg">
+      <section className="mx-auto mt-8 w-full max-w-4xl rounded-2xl border border-emerald-200 bg-white p-6 shadow-lg animate-enter-delay-2">
         <p className="text-sm font-semibold text-emerald-700">Selected Plan</p>
         <h3 className="mt-1 text-2xl font-bold text-gray-900">{activePlan.name}</h3>
         <p className="mt-2 text-gray-600">{activePlan.subtitle}</p>

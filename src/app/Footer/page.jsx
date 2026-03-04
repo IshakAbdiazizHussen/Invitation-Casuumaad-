@@ -41,8 +41,8 @@ export default function Footer({ onFooterAction }) {
   ];
 
   return (
-    <div className='bg-teal-950 text-white'>
-      <section className='p-8 sm:p-12 lg:p-20'>
+    <div className='bg-teal-950 text-white animate-enter'>
+      <section className='p-8 sm:p-12 lg:p-20 animate-enter-delay-1'>
         <div className='grid gap-10 lg:grid-cols-2'>
           <div>
             <h1 className='text-2xl font-bold text-amber-300'>Casuumaad</h1>
@@ -58,7 +58,7 @@ export default function Footer({ onFooterAction }) {
                     key={item.label}
                     href={item.href}
                     aria-label={item.label}
-                    className='rounded bg-gray-600 p-2 transition-colors hover:bg-gray-500'
+                    className='rounded bg-gray-600 p-2 transition-all duration-300 hover:bg-gray-500 hover:-translate-y-1 animate-drift'
                   >
                     <Icon className='h-5 w-5 text-amber-200' />
                   </a>
@@ -83,7 +83,7 @@ export default function Footer({ onFooterAction }) {
           </div>
         </div>
 
-        <section className='mt-10 rounded-2xl border border-teal-800 bg-teal-900/40 p-4 sm:p-5'>
+        <section className='mt-10 rounded-2xl border border-teal-800 bg-teal-900/40 p-4 sm:p-5 animate-enter-delay-2'>
           <p className='text-sm text-gray-300'>Quick Actions</p>
           <div className='mt-3 flex flex-col gap-3 sm:flex-row'>
             <button

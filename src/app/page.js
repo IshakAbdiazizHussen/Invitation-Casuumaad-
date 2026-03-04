@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MainContent from "./MainContent/page";
 import Works from "./Works/page";
 import Plan from "./Plan/page";
@@ -38,6 +38,24 @@ export default function Home() {
     timezone: detectedTimeZone,
     location: "Grand Hotel Ballroom",
   });
+
+  useEffect(() => {
+    const items = document.querySelectorAll("[data-reveal]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.16 }
+    );
+
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
 
   const timezoneOptions = [
     "UTC",
@@ -219,7 +237,7 @@ export default function Home() {
   return (
     <div className="border-t-8 border-emerald-500 bg">
     <header className="sticky top-0 z-50 border-b border-emerald-100 bg-amber-50/90 backdrop-blur">
-    <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 md:py-5">
+    <div className="animate-enter mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 md:py-5">
       <div className="flex items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-emerald-700">Casuumaad</h1>
@@ -229,7 +247,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => setIsFormOpen(true)}
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors duration-300 hover:bg-emerald-700 sm:px-6 sm:py-3 sm:text-base"
+            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors duration-300 hover:bg-emerald-700 sm:px-6 sm:py-3 sm:text-base animate-glow-pulse"
           >
             Get Started
           </button>
@@ -248,12 +266,20 @@ export default function Home() {
     </div>
   </header>
 
-      <section id="home" className="scroll-mt-32 bg-gradient-to-br from-amber-50 via-emerald-50 to-cyan-50 py-14 md:py-20">
+      <section
+        id="home"
+        data-reveal
+        style={{ "--reveal-delay": "0ms" }}
+        className="reveal scroll-mt-32 bg-gradient-to-br from-amber-50 via-emerald-50 to-cyan-50 py-14 md:py-20 animate-gradient-pan relative overflow-hidden"
+      >
+      <div className="pointer-events-none absolute -top-8 -left-8 h-40 w-40 rounded-full bg-emerald-200/60 blur-2xl animate-drift" />
+      <div className="pointer-events-none absolute right-0 top-20 h-36 w-36 rounded-full bg-amber-200/60 blur-2xl animate-soft-float" />
+      <div className="pointer-events-none absolute left-1/2 bottom-0 h-32 w-32 -translate-x-1/2 rounded-full bg-cyan-200/60 blur-2xl animate-drift" />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       
       {/* Left Side: Text + Buttons */}
-      <div className="max-w-xl text-center lg:text-left">
+      <div className="animate-enter max-w-xl text-center lg:text-left">
         <h1 className="mb-6 text-3xl font-bold leading-tight text-gray-900 sm:text-5xl md:text-6xl">
           Send Invitations <br className="hidden sm:block" />
           <span className="text-emerald-700">Instantly</span> with <br className="hidden sm:block" />
@@ -273,7 +299,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => setIsFormOpen(true)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-8 py-4 font-medium text-white shadow-lg transition-colors duration-300 hover:bg-emerald-700 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-8 py-4 font-medium text-white shadow-lg transition-colors duration-300 hover:bg-emerald-700 sm:w-auto animate-glow-pulse"
           >
             Start Now →
           </button>
@@ -281,7 +307,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => setIsHowItWorksOpen(true)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-amber-500 px-8 py-4 font-medium text-amber-700 shadow-lg transition-colors duration-300 hover:bg-amber-100 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-amber-500 px-8 py-4 font-medium text-amber-700 shadow-lg transition-colors duration-300 hover:bg-amber-100 sm:w-auto animate-drift"
           >
             ▶️ See How It Works
           </button>
@@ -289,8 +315,8 @@ export default function Home() {
       </div>
 
       {/* Right Side: Phone Mockup with Animated Success Popup */}
-      <div className="flex justify-center lg:justify-end">
-        <div className="relative w-full max-w-sm">
+      <div className="animate-enter-delay-1 flex justify-center lg:justify-end">
+        <div className="animate-soft-float relative w-full max-w-sm">
           {/* Main Phone Frame */}
           <div className="bg-white rounded-3xl shadow-2xl p-8 border-8 border-gray-900 overflow-hidden">
             
@@ -369,24 +395,49 @@ export default function Home() {
   </div>
 </section>
 
-    <section id="features" className="scroll-mt-32">
+    <section
+      id="features"
+      data-reveal
+      style={{ "--reveal-delay": "80ms" }}
+      className="reveal scroll-mt-32"
+    >
       <MainContent onFeatureClick={handleFeatureClick} />
     </section>
-    <section id="how-it-works" className="scroll-mt-32">
+    <section
+      id="how-it-works"
+      data-reveal
+      style={{ "--reveal-delay": "120ms" }}
+      className="reveal scroll-mt-32"
+    >
       <Works onStepAction={handleWorksStepClick} />
     </section>
-    <section id="pricing" className="scroll-mt-32">
+    <section
+      id="pricing"
+      data-reveal
+      style={{ "--reveal-delay": "160ms" }}
+      className="reveal scroll-mt-32"
+    >
       <Plan onPlanSelect={handlePlanSelect} />
     </section>
-    <section id="testimonials" className="scroll-mt-32">
+    <section
+      id="testimonials"
+      data-reveal
+      style={{ "--reveal-delay": "200ms" }}
+      className="reveal scroll-mt-32"
+    >
       <Trust onTrustAction={handleTrustAction} />
     </section>
-    <section id="contact" className="scroll-mt-32">
+    <section
+      id="contact"
+      data-reveal
+      style={{ "--reveal-delay": "240ms" }}
+      className="reveal scroll-mt-32"
+    >
       <Footer onFooterAction={handleFooterAction} />
     </section>
 
     {isFormOpen && (
-      <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 px-4">
+      <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 px-4 animate-pop">
         <div className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
           <div className="mb-5 flex items-center justify-between">
             <h2 className="text-2xl font-bold text-gray-900">Get Started</h2>
@@ -504,7 +555,7 @@ export default function Home() {
     )}
 
     {isHowItWorksOpen && (
-      <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 px-4">
+      <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 px-4 animate-pop">
         <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
           <div className="mb-5 flex items-center justify-between">
             <h2 className="text-2xl font-bold text-gray-900">How It Works</h2>
@@ -556,7 +607,7 @@ export default function Home() {
     )}
 
     {isDeliveryOpen && (
-      <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 px-4">
+      <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 px-4 animate-pop">
         <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-bold text-gray-900">Send Invitation Now</h2>
@@ -599,7 +650,7 @@ export default function Home() {
     )}
 
     {isStatusOpen && (
-      <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/50 px-4">
+      <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/50 px-4 animate-pop">
         <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-bold text-gray-900">Real-Time Delivery Status</h2>

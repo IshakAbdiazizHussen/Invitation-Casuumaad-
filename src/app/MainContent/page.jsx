@@ -40,7 +40,7 @@ export default function MainContent({ onFeatureClick }) {
   ];
 
   return (
-    <div className='mt-20 px-4 sm:px-6 lg:mt-32 lg:px-8'>
+    <div className='mt-20 px-4 sm:px-6 lg:mt-32 lg:px-8 animate-enter'>
       <section className='text-center'>
         <h1 className='text-3xl font-bold sm:text-4xl'>
           Powerful Features to <span className='text-emerald-700'>Simplify Your Events</span>
@@ -50,7 +50,7 @@ export default function MainContent({ onFeatureClick }) {
         </p>
       </section>
 
-      <section className='mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4'>
+      <section className='mt-8 flex flex-wrap justify-center gap-6'>
         {features.map((feature) => {
           const Icon = feature.icon;
           return (
@@ -58,10 +58,10 @@ export default function MainContent({ onFeatureClick }) {
               type="button"
               key={feature.title}
               onClick={() => onFeatureClick?.(feature.id)}
-              className="w-full rounded-2xl border border-gray-100 bg-white p-8 shadow-2xl transition-shadow hover:shadow-xl"
+              className="w-full max-w-sm rounded-2xl border border-gray-100 bg-white p-8 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-enter-delay-1"
             >
               <div className="mb-6">
-                <Icon size={48} className={`rounded-2xl p-4 ${feature.iconClass}`} />
+                <Icon size={48} className={`rounded-2xl p-4 animate-bob ${feature.iconClass}`} />
               </div>
 
               <h3 className="mb-3 text-xl font-bold text-gray-900">

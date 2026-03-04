@@ -46,7 +46,7 @@ export default function Works({ onStepAction }) {
   const activeStep = steps[activeStepIndex];
 
   return (
-    <div className='bg-gradient-to-br from-amber-50 via-emerald-50 to-cyan-50 min-h-screen px-4 sm:px-6 lg:px-8'>
+    <div className='bg-gradient-to-br from-amber-50 via-emerald-50 to-cyan-50 min-h-screen px-4 sm:px-6 lg:px-8 animate-enter'>
         <section className='mt-20 p-5 text-center lg:mt-40'>
             <h1 className='text-3xl font-bold sm:text-4xl'>How <span className='text-emerald-700'>Invitation</span> Works</h1>
             <p className='mx-auto mt-3 max-w-2xl text-gray-600'>
@@ -54,7 +54,7 @@ export default function Works({ onStepAction }) {
             </p>
         </section>
 
-        <section className='mt-10 flex flex-wrap justify-center gap-6 lg:mt-20'>
+        <section className='mt-10 flex flex-wrap justify-center gap-6 lg:mt-20 animate-enter-delay-1'>
           {steps.map((item) => {
             const Icon = item.icon;
             const isActive = item.step === activeStep.step;
@@ -66,7 +66,7 @@ export default function Works({ onStepAction }) {
                   setActiveStepIndex(steps.findIndex((s) => s.step === item.step));
                   onStepAction?.(item.id);
                 }}
-                className={`w-full max-w-sm rounded-2xl border bg-white p-8 shadow-2xl transition-all hover:shadow-xl ${
+                className={`w-full max-w-sm rounded-2xl border bg-white p-8 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
                   isActive ? "border-emerald-500 ring-2 ring-emerald-200" : "border-gray-100"
                 }`}
               >
@@ -74,7 +74,7 @@ export default function Works({ onStepAction }) {
                 <div className="mb-6">
                   <Icon
                     size={48}
-                    className={`rounded-2xl p-4 text-white ${item.iconClass}`}
+                    className={`rounded-2xl p-4 text-white animate-bob ${item.iconClass}`}
                   />
                 </div>
 
@@ -90,7 +90,7 @@ export default function Works({ onStepAction }) {
           })}
         </section>
 
-        <section className="mx-auto mt-8 w-full max-w-4xl rounded-2xl border border-emerald-200 bg-white p-6 shadow-lg">
+        <section className="mx-auto mt-8 w-full max-w-4xl rounded-2xl border border-emerald-200 bg-white p-6 shadow-lg animate-enter-delay-2">
           <p className="text-sm font-semibold text-emerald-700">Active Step</p>
           <h3 className="mt-1 text-2xl font-bold text-gray-900">{activeStep.step}: {activeStep.title}</h3>
           <p className="mt-2 text-gray-600">{activeStep.description}</p>
