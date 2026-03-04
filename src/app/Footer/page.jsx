@@ -1,61 +1,143 @@
+"use client";
+
 import React from 'react';
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
-export default function Footer() {
+export default function Footer({ onFooterAction }) {
+  const phoneNumber = "+252610909060";
+  const emailAddress = "ishakabdiaziz9060@gamil.com";
+  const socialLinks = [
+    { icon: Facebook, label: "Facebook", href: "#" },
+    { icon: Twitter, label: "Twitter", href: "#" },
+    { icon: Instagram, label: "Instagram", href: "#" },
+    { icon: Linkedin, label: "LinkedIn", href: "#" },
+  ];
+
+  const footerGroups = [
+    {
+      title: "Company",
+      links: [
+        { label: "About", href: "#home" },
+        { label: "Blog", href: "#home" },
+        { label: "Press", href: "#home" },
+      ],
+    },
+    {
+      title: "Product",
+      links: [
+        { label: "Features", href: "#features" },
+        { label: "How It Works", href: "#how-it-works" },
+        { label: "Pricing", href: "#pricing" },
+      ],
+    },
+    {
+      title: "Support",
+      links: [
+        { label: "FAQs", href: "#contact" },
+        { label: "Help Center", href: "#contact" },
+        { label: "Contact", href: "#contact" },
+      ],
+    },
+  ];
+
   return (
     <div className='bg-slate-800 text-white'>
-        <section className='p-8 sm:p-12 lg:p-20'>
-            <h1 className='text-sky-400'>Invitational</h1>
-            <p>The easiest way to create, manage and send event <br />invitations throughy SMS and WhatsApp</p>
-            
-            
-            <section className='flex gap-5'>
-                <div>
-                <Facebook className='text-sky-400 bg-gray-500 rounded p-1 w-8 h-8' size={18}/>
-            </div>
+      <section className='p-8 sm:p-12 lg:p-20'>
+        <div className='grid gap-10 lg:grid-cols-2'>
+          <div>
+            <h1 className='text-2xl font-bold text-sky-400'>Casuumaad</h1>
+            <p className='mt-3 max-w-md text-gray-300'>
+              The easiest way to create, manage, and send event invitations through SMS and WhatsApp.
+            </p>
 
-            <div>
-                <Twitter className='text-sky-400 bg-gray-500 rounded p-1 w-8 h-8' size={18}/>
-            </div>
-
-            <div>
-                <Instagram className='text-sky-400 bg-gray-500 rounded p-1 w-8 h-8' size={18}/>
-            </div>
-
-            <div>
-                <Linkedin className='text-sky-400 bg-gray-500 rounded p-1 w-8 h-8' size={18}/>
-            </div>
+            <section className='mt-5 flex gap-3'>
+              {socialLinks.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    aria-label={item.label}
+                    className='rounded bg-gray-600 p-2 transition-colors hover:bg-gray-500'
+                  >
+                    <Icon className='h-5 w-5 text-sky-300' />
+                  </a>
+                );
+              })}
             </section>
+          </div>
 
-            <section className='mt-8 flex flex-col gap-6 sm:flex-row sm:gap-12'>
-                <div>
-                    <h1>Company</h1>
-                    <p>About</p>
-                     <p>Categories</p>
-                      <p>Blog</p>
-                       <p>Press</p>
+          <div className='grid gap-6 sm:grid-cols-3'>
+            {footerGroups.map((group) => (
+              <section key={group.title}>
+                <h2 className='mb-3 font-semibold text-white'>{group.title}</h2>
+                <div className='space-y-2 text-gray-300'>
+                  {group.links.map((link) => (
+                    <a key={link.label} href={link.href} className='block hover:text-sky-300'>
+                      {link.label}
+                    </a>
+                  ))}
                 </div>
+              </section>
+            ))}
+          </div>
+        </div>
 
-                <div>
-                    <h1>Product</h1>
-                    <p>Features</p>
-                     <p>Pricing</p>
-                      <p>Templetes</p>
-                       <p>Intelligations</p>
-                </div>
-
-                <div>
-                    <h1>Support</h1>
-                    <p>FAQs</p>
-                     <p>Help Center</p>
-                      <p>Contact</p>
-                       <p>Privacy Policy</p>
-                </div>
-
-                
-            </section>
-            
+        <section className='mt-10 rounded-2xl border border-slate-600 bg-slate-700/40 p-4 sm:p-5'>
+          <p className='text-sm text-gray-300'>Quick Actions</p>
+          <div className='mt-3 flex flex-col gap-3 sm:flex-row'>
+            <button
+              type="button"
+              onClick={() => onFooterAction?.("setup")}
+              className='rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700'
+            >
+              Start Setup
+            </button>
+            <button
+              type="button"
+              onClick={() => onFooterAction?.("send")}
+              className='rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700'
+            >
+              Send Invitation
+            </button>
+            <button
+              type="button"
+              onClick={() => onFooterAction?.("status")}
+              className='rounded-lg border border-slate-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-600'
+            >
+              Live Status
+            </button>
+          </div>
         </section>
+
+        <section className='mt-4 rounded-2xl border border-slate-600 bg-slate-700/40 p-4 sm:p-5'>
+          <p className='text-sm text-gray-300'>Direct Contact</p>
+          <div className='mt-2 space-y-2'>
+            <a href={`tel:${phoneNumber}`} className='block text-sm text-sky-300 hover:text-sky-200'>
+              Phone: {phoneNumber}
+            </a>
+            <a href={`mailto:${emailAddress}`} className='block text-sm text-sky-300 hover:text-sky-200'>
+              Email: {emailAddress}
+            </a>
+          </div>
+          <div className='mt-4 flex flex-col gap-3 sm:flex-row'>
+            <a
+              href={`tel:${phoneNumber}`}
+              className='rounded-lg bg-emerald-600 px-4 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-emerald-700'
+            >
+              Call Now
+            </a>
+            <a
+              href={`mailto:${emailAddress}`}
+              className='rounded-lg bg-blue-600 px-4 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-blue-700'
+            >
+              Send Email
+            </a>
+          </div>
+        </section>
+
+        <p className='mt-8 text-sm text-gray-400'>© {new Date().getFullYear()} Casuumaad. All rights reserved.</p>
+      </section>
     </div>
   )
 }

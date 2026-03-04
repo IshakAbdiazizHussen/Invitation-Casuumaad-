@@ -8,8 +8,18 @@ import Trust from "./Trust/page";
 import Footer from "./Footer/page";
 
 export default function Home() {
+  const detectedTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
+  const [isDeliveryOpen, setIsDeliveryOpen] = useState(false);
+  const [isStatusOpen, setIsStatusOpen] = useState(false);
+  const [deliveryStatus, setDeliveryStatus] = useState({
+    total: 0,
+    pending: 0,
+    sent: 0,
+    failed: 0,
+    history: [],
+  });
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -18,14 +28,32 @@ export default function Home() {
     eventName: "Wedding Celebration",
     eventDate: "2026-12-25",
     eventTime: "18:00",
+    timezone: detectedTimeZone,
     location: "Grand Hotel Ballroom",
     notes: "",
   });
   const [eventPreview, setEventPreview] = useState({
     eventName: "Wedding Celebration",
-    eventDateTime: "Dec 25, 2026 • 6:00 PM",
+    eventDateTime: "Dec 25, 2026 • 6:00 PM (UTC)",
+    timezone: detectedTimeZone,
     location: "Grand Hotel Ballroom",
   });
+
+  const timezoneOptions = [
+    "UTC",
+    "Africa/Mogadishu",
+    "Africa/Nairobi",
+    "Europe/London",
+    "Europe/Istanbul",
+    "Asia/Dubai",
+    "Asia/Riyadh",
+    "Asia/Kolkata",
+    "Asia/Kuala_Lumpur",
+    "America/New_York",
+    "America/Chicago",
+    "America/Denver",
+    "America/Los_Angeles",
+  ];
 
   function goToHowItWorks() {
     setIsHowItWorksOpen(false);
@@ -49,9 +77,11 @@ export default function Home() {
           hour12: true,
         }).replace(",", " •");
 
+    const timezoneLabel = formData.timezone || "UTC";
     setEventPreview({
       eventName: formData.eventName || "Untitled Event",
-      eventDateTime,
+      eventDateTime: `${eventDateTime} (${timezoneLabel})`,
+      timezone: timezoneLabel,
       location: formData.location || "Location not set",
     });
     setIsFormOpen(false);
@@ -62,39 +92,160 @@ export default function Home() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
+  function buildInviteMessage() {
+    return `You're invited to ${eventPreview.eventName}. Date & Time: ${eventPreview.eventDateTime}. Timezone: ${eventPreview.timezone}. Location: ${eventPreview.location}.`;
+  }
+
+  function getPhoneForDelivery() {
+    return formData.phone.replace(/[^\d+]/g, "").trim();
+  }
+
+  function openDelivery() {
+    if (!getPhoneForDelivery()) {
+      setIsFormOpen(true);
+      return;
+    }
+    setIsDeliveryOpen(true);
+  }
+
+  function sendWhatsApp() {
+    const phone = getPhoneForDelivery().replace(/\D/g, "");
+    if (!phone) return;
+    queueDelivery("WhatsApp", phone);
+    const text = encodeURIComponent(buildInviteMessage());
+    window.open(`https://wa.me/${phone}?text=${text}`, "_blank", "noopener,noreferrer");
+  }
+
+  function sendSms() {
+    const phone = getPhoneForDelivery();
+    if (!phone) return;
+    queueDelivery("SMS", phone);
+    const body = encodeURIComponent(buildInviteMessage());
+    window.open(`sms:${phone}?&body=${body}`, "_self");
+  }
+
+  function queueDelivery(channel, recipient) {
+    const id = Date.now();
+    const createdAt = new Date().toLocaleTimeString();
+
+    setDeliveryStatus((prev) => ({
+      ...prev,
+      total: prev.total + 1,
+      pending: prev.pending + 1,
+      history: [
+        {
+          id,
+          channel,
+          recipient,
+          status: "Queued",
+          createdAt,
+        },
+        ...prev.history,
+      ].slice(0, 20),
+    }));
+
+    setTimeout(() => {
+      const isSuccess = Math.random() > 0.1;
+      setDeliveryStatus((prev) => ({
+        ...prev,
+        pending: Math.max(0, prev.pending - 1),
+        sent: prev.sent + (isSuccess ? 1 : 0),
+        failed: prev.failed + (isSuccess ? 0 : 1),
+        history: prev.history.map((item) =>
+          item.id === id ? { ...item, status: isSuccess ? "Sent" : "Failed" } : item
+        ),
+      }));
+    }, 1400);
+  }
+
+  function handleFeatureClick(featureId) {
+    if (featureId === "setup" || featureId === "guests") {
+      setIsFormOpen(true);
+      return;
+    }
+
+    if (featureId === "delivery") {
+      openDelivery();
+      return;
+    }
+
+    if (featureId === "status") {
+      setIsStatusOpen(true);
+    }
+  }
+
+  function handleWorksStepClick(stepId) {
+    if (stepId === "create_event" || stepId === "add_guests" || stepId === "customize_message") {
+      setIsFormOpen(true);
+      return;
+    }
+
+    if (stepId === "send_track") {
+      openDelivery();
+      setIsStatusOpen(true);
+    }
+  }
+
+  function handlePlanSelect(planId) {
+    const planLabel = planId === "monthly" ? "Monthly Plan" : "Weekly Plan";
+    setFormData((prev) => ({
+      ...prev,
+      eventType: planLabel,
+      notes: prev.notes || `Selected ${planLabel}`,
+    }));
+    setIsFormOpen(true);
+  }
+
+  function handleTrustAction() {
+    setIsFormOpen(true);
+  }
+
+  function handleFooterAction(action) {
+    if (action === "setup") {
+      setIsFormOpen(true);
+      return;
+    }
+
+    if (action === "send") {
+      openDelivery();
+      return;
+    }
+
+    if (action === "status") {
+      setIsStatusOpen(true);
+    }
+  }
+
   return (
     <div className="border-t-8 border-sky-400 bg">
     <header className="sticky top-0 z-50 border-b border-sky-100 bg-white/90 backdrop-blur">
-    <div className="relative mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8 md:flex-row md:items-center md:justify-between md:py-6">
-    
-    {/* Left: Logo/Title */}
-    <div className="text-center md:text-left">
-      <h1 className="text-2xl font-bold text-blue-600">Casuumaad</h1>
+    <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 md:py-5">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-blue-600">Casuumaad</h1>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsFormOpen(true)}
+            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors duration-300 hover:bg-sky-500 sm:px-6 sm:py-3 sm:text-base"
+          >
+            Get Started
+          </button>
+        </div>
+      </div>
+
+      <nav id="main-navigation" className="mt-4 border-t border-slate-200 pt-3">
+        <ul className="flex gap-2 overflow-x-auto pb-1">
+          <li className="shrink-0"><a href="#home" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">Home</a></li>
+          <li className="shrink-0"><a href="#features" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">Features</a></li>
+          <li className="shrink-0"><a href="#how-it-works" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">How it works</a></li>
+          <li className="shrink-0"><a href="#pricing" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">Pricing</a></li>
+          <li className="shrink-0"><a href="#contact" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">Contact</a></li>
+        </ul>
+      </nav>
     </div>
-
-    {/* Center: Navigation Menu */}
-    <nav className="w-full md:absolute md:left-1/2 md:w-auto md:-translate-x-1/2">
-      <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm sm:text-base md:gap-10">
-        <li><a href="#home" className="text-gray-700 hover:text-sky-500 font-medium transition-colors duration-300">Home</a></li>
-        <li><a href="#features" className="text-gray-700 hover:text-sky-500 font-medium transition-colors duration-300">Features</a></li>
-        <li><a href="#how-it-works" className="text-gray-700 hover:text-sky-500 font-medium transition-colors duration-300">How it works</a></li>
-        <li><a href="#pricing" className="text-gray-700 hover:text-sky-500 font-medium transition-colors duration-300">Pricing</a></li>
-        <li><a href="#contact" className="text-gray-700 hover:text-sky-500 font-medium transition-colors duration-300">Contact</a></li>
-      </ul>
-    </nav>
-
-    {/* Right: Button */}
-    <div className="w-full md:w-auto">
-      <button
-        type="button"
-        onClick={() => setIsFormOpen(true)}
-        className="w-full rounded-lg bg-blue-600 px-6 py-3 font-medium text-white shadow-lg transition-colors duration-300 hover:bg-sky-500 md:w-auto"
-      >
-        Get Started
-      </button>
-    </div>
-
-  </div>
   </header>
 
       <section id="home" className="scroll-mt-32 bg-gradient-to-l from-sky-50 to-sky-50 py-14 md:py-20">
@@ -149,7 +300,7 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-800 sm:text-base">Sent Successfully</p>
-                  <p className="text-sm text-gray-600">250 invitations</p>
+                  <p className="text-sm text-gray-600">{deliveryStatus.sent} invitations</p>
                 </div>
               </div>
             </div>
@@ -179,6 +330,20 @@ export default function Home() {
               <button className="w-full bg-blue-600 text-white py-4 rounded-lg mt-8 font-medium hover:bg-blue-700 transition">
                 Continue to Guest List →
               </button>
+              <button
+                type="button"
+                onClick={openDelivery}
+                className="mt-3 w-full rounded-lg border-2 border-blue-600 py-3 font-medium text-blue-600 transition-colors hover:bg-blue-50"
+              >
+                Send via WhatsApp / SMS
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsStatusOpen(true)}
+                className="mt-3 w-full rounded-lg border border-gray-300 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-100"
+              >
+                Open Live Delivery Status
+              </button>
             </div>
           </div>
         </div>
@@ -189,19 +354,19 @@ export default function Home() {
 </section>
 
     <section id="features" className="scroll-mt-32">
-      <MainContent />
+      <MainContent onFeatureClick={handleFeatureClick} />
     </section>
     <section id="how-it-works" className="scroll-mt-32">
-      <Works />
+      <Works onStepAction={handleWorksStepClick} />
     </section>
     <section id="pricing" className="scroll-mt-32">
-      <Plan />
+      <Plan onPlanSelect={handlePlanSelect} />
     </section>
     <section id="testimonials" className="scroll-mt-32">
-      <Trust />
+      <Trust onTrustAction={handleTrustAction} />
     </section>
     <section id="contact" className="scroll-mt-32">
-      <Footer />
+      <Footer onFooterAction={handleFooterAction} />
     </section>
 
     {isFormOpen && (
@@ -240,7 +405,8 @@ export default function Home() {
             <input
               type="tel"
               name="phone"
-              placeholder="Phone Number"
+              required
+              placeholder="Phone Number (with country code)"
               value={formData.phone}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
@@ -280,6 +446,19 @@ export default function Home() {
                 className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
               />
             </div>
+            <select
+              name="timezone"
+              required
+              value={formData.timezone}
+              onChange={handleInputChange}
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+            >
+              {timezoneOptions.map((tz) => (
+                <option key={tz} value={tz}>
+                  {tz}
+                </option>
+              ))}
+            </select>
             <input
               type="text"
               name="location"
@@ -355,6 +534,113 @@ export default function Home() {
             >
               View Full Section
             </button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {isDeliveryOpen && (
+      <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 px-4">
+        <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-900">Send Invitation Now</h2>
+            <button
+              type="button"
+              onClick={() => setIsDeliveryOpen(false)}
+              className="rounded-md px-3 py-1 text-gray-600 hover:bg-gray-100"
+            >
+              Close
+            </button>
+          </div>
+          <p className="mb-2 text-sm text-gray-600">To: {getPhoneForDelivery() || "No phone number"}</p>
+          <p className="mb-2 text-sm text-gray-600">Timezone: {eventPreview.timezone}</p>
+          <p className="mb-6 rounded-lg bg-gray-50 p-3 text-sm text-gray-700">{buildInviteMessage()}</p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={sendWhatsApp}
+              className="w-full rounded-lg bg-green-600 px-4 py-3 font-medium text-white hover:bg-green-700"
+            >
+              Send WhatsApp
+            </button>
+            <button
+              type="button"
+              onClick={sendSms}
+              className="w-full rounded-lg bg-blue-600 px-4 py-3 font-medium text-white hover:bg-blue-700"
+            >
+              Send SMS
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsStatusOpen(true)}
+            className="mt-3 w-full rounded-lg border border-gray-300 px-4 py-3 font-medium text-gray-700 hover:bg-gray-100"
+          >
+            View Live Status Board
+          </button>
+        </div>
+      </div>
+    )}
+
+    {isStatusOpen && (
+      <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/50 px-4">
+        <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-900">Real-Time Delivery Status</h2>
+            <button
+              type="button"
+              onClick={() => setIsStatusOpen(false)}
+              className="rounded-md px-3 py-1 text-gray-600 hover:bg-gray-100"
+            >
+              Close
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="rounded-lg bg-gray-50 p-3">
+              <p className="text-xs text-gray-500">Total</p>
+              <p className="text-xl font-bold">{deliveryStatus.total}</p>
+            </div>
+            <div className="rounded-lg bg-yellow-50 p-3">
+              <p className="text-xs text-yellow-700">Pending</p>
+              <p className="text-xl font-bold text-yellow-700">{deliveryStatus.pending}</p>
+            </div>
+            <div className="rounded-lg bg-green-50 p-3">
+              <p className="text-xs text-green-700">Sent</p>
+              <p className="text-xl font-bold text-green-700">{deliveryStatus.sent}</p>
+            </div>
+            <div className="rounded-lg bg-red-50 p-3">
+              <p className="text-xs text-red-700">Failed</p>
+              <p className="text-xl font-bold text-red-700">{deliveryStatus.failed}</p>
+            </div>
+          </div>
+
+          <div className="mt-5 space-y-2">
+            {deliveryStatus.history.length === 0 ? (
+              <p className="rounded-lg bg-gray-50 p-3 text-sm text-gray-600">
+                No deliveries yet. Send an invitation to see live updates.
+              </p>
+            ) : (
+              deliveryStatus.history.map((item) => (
+                <div key={item.id} className="flex items-center justify-between rounded-lg border border-gray-200 p-3">
+                  <div>
+                    <p className="font-medium text-gray-800">{item.channel} to {item.recipient}</p>
+                    <p className="text-xs text-gray-500">{item.createdAt}</p>
+                  </div>
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      item.status === "Sent"
+                        ? "bg-green-100 text-green-700"
+                        : item.status === "Failed"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-yellow-100 text-yellow-700"
+                    }`}
+                  >
+                    {item.status}
+                  </span>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

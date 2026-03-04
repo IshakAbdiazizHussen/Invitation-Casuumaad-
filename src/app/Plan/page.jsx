@@ -1,77 +1,104 @@
-import React from 'react'
+"use client";
 
-export default function Plan() {
+import React, { useState } from 'react'
+
+export default function Plan({ onPlanSelect }) {
+  const plans = [
+    {
+      id: "weekly",
+      name: "Weekly Plan",
+      price: "$9.99",
+      period: "/ 7 Days",
+      subtitle: "Great for testing your first campaign",
+      recommended: false,
+      features: [
+        "Up to 250 invitations",
+        "WhatsApp and SMS sending",
+        "Live delivery status",
+        "Basic guest grouping",
+        "Email support",
+      ],
+    },
+    {
+      id: "monthly",
+      name: "Monthly Plan",
+      price: "$29.99",
+      period: "/ 30 Days",
+      subtitle: "Best value for regular events and teams",
+      recommended: true,
+      features: [
+        "Up to 2000 invitations",
+        "Priority send queue",
+        "Advanced live status board",
+        "Guest tags and segmentation",
+        "Priority support",
+      ],
+    },
+  ];
+
+  const [activePlanId, setActivePlanId] = useState("monthly");
+  const activePlan = plans.find((plan) => plan.id === activePlanId) || plans[0];
+
   return (
     <div>
-        <section className='mt-20 px-4 text-center sm:px-6 lg:px-8'>
-            <h1 className='text-3xl font-bold sm:text-4xl'>Simple, <span className='text-blue-800'>Affordable Pricing</span></h1>
-            <p>Flexible Plans for Every Business</p>
-        </section>
+      <section className='mt-20 px-4 text-center sm:px-6 lg:px-8'>
+        <h1 className='text-3xl font-bold sm:text-4xl'>Simple, <span className='text-blue-800'>Affordable Pricing</span></h1>
+        <p className='mt-2 text-gray-600'>Choose a plan and activate it instantly.</p>
+      </section>
 
-            <div className='mt-8 flex flex-col items-center gap-8 lg:flex-row lg:justify-center lg:gap-10'>
-            <section>
-            <div className="mt-6 w-full max-w-md min-h-[28rem] rounded-2xl border border-gray-100 bg-white p-8 shadow-2xl">
-
-            {/* Title */}
-            <h3 className="text-xl font-bold text-center">
-                Weekly Plan
-            </h3>
-
-            {/* Description */}
-            <p className="text-gray-600 leading-relaxed text-center">
-                PLans Makes You Success
-            </p>
-            <h1 className='mt-6 text-center text-3xl font-bold'>$9.99 <span className='ml-2 text-xl font-medium text-gray-400'>/ 7 Days</span></h1>
-            <section className='mt-10'>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-
-            </section>
-
-            <button className="w-full bg-gray-100 text-black py-4 rounded-lg mt-8 font-medium transition">
-                Activate Weekly
+      <div className='mt-8 flex flex-col items-center gap-8 lg:flex-row lg:justify-center lg:gap-10'>
+        {plans.map((plan) => {
+          const isActive = activePlanId === plan.id;
+          return (
+            <section key={plan.id} className="w-full max-w-md">
+              {plan.recommended && (
+                <p className='mx-auto mb-2 w-40 rounded-4xl bg-blue-700 text-center text-white'>★ Recommended</p>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  setActivePlanId(plan.id);
+                  onPlanSelect?.(plan.id);
+                }}
+                className={`w-full min-h-[28rem] rounded-2xl border bg-white p-8 text-left shadow-2xl transition-all hover:shadow-xl ${
+                  isActive ? "border-2 border-sky-400 ring-2 ring-sky-200" : "border-gray-100"
+                }`}
+              >
+                <h3 className="text-center text-xl font-bold">{plan.name}</h3>
+                <p className="text-center leading-relaxed text-gray-600">{plan.subtitle}</p>
+                <h1 className='mt-6 text-center text-3xl font-bold'>
+                  {plan.price} <span className='ml-2 text-xl font-medium text-gray-400'>{plan.period}</span>
+                </h1>
+                <section className='mt-8 space-y-2'>
+                  {plan.features.map((feature) => (
+                    <p key={feature}>
+                      <span className="rounded bg-sky-200 text-sky-600">✓</span> {feature}
+                    </p>
+                  ))}
+                </section>
+                <p className={`mt-8 rounded-lg py-4 text-center font-medium transition ${
+                  plan.recommended ? "bg-blue-700 text-white" : "bg-gray-100 text-black"
+                }`}>
+                  Activate {plan.name.replace(" Plan", "")}
+                </p>
               </button>
-
-            </div>
-        </section>
-
-            <section>
-                <p className='text-center bg-blue-700 w-40 rounded-4xl text-white mx-auto'>★Recomended</p>
-                <div className="w-full max-w-md min-h-[28rem] rounded-2xl border border-gray-100 bg-white p-8 shadow-2xl border-2 border-sky-300">
-
-            {/* Title */}
-
-            <h3 className="text-xl font-bold text-center">
-                Monthly Plan
-            </h3>
-
-            {/* Description */}
-            <p className="text-gray-600 leading-relaxed text-center">
-                Best value of our guest more than number
-            </p>
-            <h1 className='mt-6 text-center text-3xl font-bold'>$29.99 <span className='ml-2 text-xl font-medium text-gray-400'>/ 30 Days</span></h1>
-            <section className='mt-10'>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-                <p><span className=" bg-sky-200 text-sky-600 rounded">✓</span> Active sending requests about plan</p>
-
             </section>
+          );
+        })}
+      </div>
 
-            <button className="w-full bg-blue-700 text-white py-4 rounded-lg mt-8 font-medium  transition">
-                Activate Monthly
-              </button>
-
-            </div>
-        </section>
-
-            </div>
-        
-        
+      <section className="mx-auto mt-8 w-full max-w-4xl rounded-2xl border border-blue-100 bg-white p-6 shadow-lg">
+        <p className="text-sm font-semibold text-blue-700">Selected Plan</p>
+        <h3 className="mt-1 text-2xl font-bold text-gray-900">{activePlan.name}</h3>
+        <p className="mt-2 text-gray-600">{activePlan.subtitle}</p>
+        <button
+          type="button"
+          onClick={() => onPlanSelect?.(activePlan.id)}
+          className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+        >
+          Continue with {activePlan.name}
+        </button>
+      </section>
     </div>
   )
 }
