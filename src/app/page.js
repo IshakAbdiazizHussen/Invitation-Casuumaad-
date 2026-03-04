@@ -121,7 +121,7 @@ export default function Home() {
     if (!phone) return;
     queueDelivery("SMS", phone);
     const body = encodeURIComponent(buildInviteMessage());
-    window.open(`sms:${phone}?&body=${body}`, "_self");
+    window.open(`sms:${phone}?&body=${body}`, "_blank", "noopener,noreferrer");
   }
 
   function queueDelivery(channel, recipient) {
@@ -145,7 +145,7 @@ export default function Home() {
     }));
 
     setTimeout(() => {
-      const isSuccess = Math.random() > 0.1;
+      const isSuccess = true;
       setDeliveryStatus((prev) => ({
         ...prev,
         pending: Math.max(0, prev.pending - 1),
@@ -294,19 +294,32 @@ export default function Home() {
           {/* Main Phone Frame */}
           <div className="bg-white rounded-3xl shadow-2xl p-8 border-8 border-gray-900 overflow-hidden">
             
-            {/* Animated Success Notification Popup */}
-            <div className="absolute left-1/2 top-4 -translate-x-1/2 animate-slideDown">
-              <div className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-2xl sm:px-6 sm:py-4">
-
-                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                  ✓
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-800 sm:text-base">Sent Successfully</p>
-                  <p className="text-sm text-gray-600">{deliveryStatus.sent} invitations</p>
+            {/* Live delivery badge: queued -> sent */}
+            {deliveryStatus.total > 0 && (
+              <div className="absolute left-1/2 top-4 -translate-x-1/2 animate-slideDown">
+                <div className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-2xl sm:px-6 sm:py-4">
+                  {deliveryStatus.pending > 0 ? (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-white">
+                      ...
+                    </div>
+                  ) : (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 text-xl font-bold text-white">
+                      ✓
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-sm font-medium text-gray-800 sm:text-base">
+                      {deliveryStatus.pending > 0 ? "Sending Invitation..." : "Sent Successfully"}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {deliveryStatus.pending > 0
+                        ? `${deliveryStatus.pending} pending`
+                        : `${deliveryStatus.sent} invitations`}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Phone Content */}
             <div className="mt-20"> {/* Extra top margin to make space for popup */}
