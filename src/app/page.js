@@ -299,7 +299,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => setIsFormOpen(true)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-8 py-4 font-medium text-white shadow-lg transition-colors duration-300 hover:bg-emerald-700 sm:w-auto animate-glow-pulse"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-8 py-4 font-medium text-white shadow-lg transition-colors duration-300 hover:bg-emerald-700 sm:w-auto animate-drift"
           >
             Start Now →
           </button>
