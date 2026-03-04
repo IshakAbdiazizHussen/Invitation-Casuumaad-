@@ -41,11 +41,11 @@ export default function Footer({ onFooterAction }) {
   ];
 
   return (
-    <div className='bg-slate-800 text-white'>
+    <div className='bg-teal-950 text-white'>
       <section className='p-8 sm:p-12 lg:p-20'>
         <div className='grid gap-10 lg:grid-cols-2'>
           <div>
-            <h1 className='text-2xl font-bold text-sky-400'>Casuumaad</h1>
+            <h1 className='text-2xl font-bold text-amber-300'>Casuumaad</h1>
             <p className='mt-3 max-w-md text-gray-300'>
               The easiest way to create, manage, and send event invitations through SMS and WhatsApp.
             </p>
@@ -60,7 +60,7 @@ export default function Footer({ onFooterAction }) {
                     aria-label={item.label}
                     className='rounded bg-gray-600 p-2 transition-colors hover:bg-gray-500'
                   >
-                    <Icon className='h-5 w-5 text-sky-300' />
+                    <Icon className='h-5 w-5 text-amber-200' />
                   </a>
                 );
               })}
@@ -73,7 +73,7 @@ export default function Footer({ onFooterAction }) {
                 <h2 className='mb-3 font-semibold text-white'>{group.title}</h2>
                 <div className='space-y-2 text-gray-300'>
                   {group.links.map((link) => (
-                    <a key={link.label} href={link.href} className='block hover:text-sky-300'>
+                    <a key={link.label} href={link.href} className='block hover:text-amber-200'>
                       {link.label}
                     </a>
                   ))}
@@ -83,13 +83,13 @@ export default function Footer({ onFooterAction }) {
           </div>
         </div>
 
-        <section className='mt-10 rounded-2xl border border-slate-600 bg-slate-700/40 p-4 sm:p-5'>
+        <section className='mt-10 rounded-2xl border border-teal-800 bg-teal-900/40 p-4 sm:p-5'>
           <p className='text-sm text-gray-300'>Quick Actions</p>
           <div className='mt-3 flex flex-col gap-3 sm:flex-row'>
             <button
               type="button"
               onClick={() => onFooterAction?.("setup")}
-              className='rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700'
+              className='rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700'
             >
               Start Setup
             </button>
@@ -103,20 +103,20 @@ export default function Footer({ onFooterAction }) {
             <button
               type="button"
               onClick={() => onFooterAction?.("status")}
-              className='rounded-lg border border-slate-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-600'
+              className='rounded-lg border border-teal-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800'
             >
               Live Status
             </button>
           </div>
         </section>
 
-        <section className='mt-4 rounded-2xl border border-slate-600 bg-slate-700/40 p-4 sm:p-5'>
+        <section className='mt-4 rounded-2xl border border-teal-800 bg-teal-900/40 p-4 sm:p-5'>
           <p className='text-sm text-gray-300'>Direct Contact</p>
           <div className='mt-2 space-y-2'>
-            <a href={`tel:${phoneNumber}`} className='block text-sm text-sky-300 hover:text-sky-200'>
+            <a href={`tel:${phoneNumber}`} className='block text-sm text-amber-200 hover:text-amber-100'>
               Phone: {phoneNumber}
             </a>
-            <a href={`mailto:${emailAddress}`} className='block text-sm text-sky-300 hover:text-sky-200'>
+            <a href={`mailto:${emailAddress}`} className='block text-sm text-amber-200 hover:text-amber-100'>
               Email: {emailAddress}
             </a>
           </div>
@@ -129,7 +129,7 @@ export default function Footer({ onFooterAction }) {
             </a>
             <a
               href={`mailto:${emailAddress}`}
-              className='rounded-lg bg-blue-600 px-4 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-blue-700'
+              className='rounded-lg bg-amber-500 px-4 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-amber-600'
             >
               Send Email
             </a>

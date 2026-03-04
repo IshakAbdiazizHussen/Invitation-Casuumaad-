@@ -6,7 +6,7 @@ export default function MainContent({ onFeatureClick }) {
     {
       id: "setup",
       icon: Calendar,
-      iconClass: "bg-sky-100 text-sky-700",
+      iconClass: "bg-emerald-100 text-emerald-700",
       title: "Smart Event Setup",
       description: "Create your event in minutes with date, time, location, and custom message options.",
       cta: "Create Event",
@@ -41,7 +41,7 @@ export default function MainContent({ onFeatureClick }) {
     <div className='mt-20 px-4 sm:px-6 lg:mt-32 lg:px-8'>
       <section className='text-center'>
         <h1 className='text-3xl font-bold sm:text-4xl'>
-          Powerful Features to <span className='text-blue-600'>Simplify Your Events</span>
+          Powerful Features to <span className='text-emerald-700'>Simplify Your Events</span>
         </h1>
         <p className='mx-auto mt-4 max-w-2xl text-gray-600'>
           Everything you need to create events, manage guests, and send invitations clearly and fast.
@@ -69,7 +69,7 @@ export default function MainContent({ onFeatureClick }) {
               <p className="leading-relaxed text-gray-600">
                 {feature.description}
               </p>
-              <p className="mt-4 font-semibold text-blue-600">{feature.cta} →</p>
+              <p className="mt-4 font-semibold text-emerald-700">{feature.cta} →</p>
             </button>
           );
         })}

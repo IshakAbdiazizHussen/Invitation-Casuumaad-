@@ -217,38 +217,38 @@ export default function Home() {
   }
 
   return (
-    <div className="border-t-8 border-sky-400 bg">
-    <header className="sticky top-0 z-50 border-b border-sky-100 bg-white/90 backdrop-blur">
+    <div className="border-t-8 border-emerald-500 bg">
+    <header className="sticky top-0 z-50 border-b border-emerald-100 bg-amber-50/90 backdrop-blur">
     <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 md:py-5">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-blue-600">Casuumaad</h1>
+          <h1 className="text-2xl font-bold text-emerald-700">Casuumaad</h1>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setIsFormOpen(true)}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors duration-300 hover:bg-sky-500 sm:px-6 sm:py-3 sm:text-base"
+            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors duration-300 hover:bg-emerald-700 sm:px-6 sm:py-3 sm:text-base"
           >
             Get Started
           </button>
         </div>
       </div>
 
-      <nav id="main-navigation" className="mt-4 border-t border-slate-200 pt-3">
+      <nav id="main-navigation" className="mt-4 border-t border-emerald-200 pt-3">
         <ul className="flex gap-2 overflow-x-auto pb-1">
-          <li className="shrink-0"><a href="#home" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">Home</a></li>
-          <li className="shrink-0"><a href="#features" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">Features</a></li>
-          <li className="shrink-0"><a href="#how-it-works" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">How it works</a></li>
-          <li className="shrink-0"><a href="#pricing" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">Pricing</a></li>
-          <li className="shrink-0"><a href="#contact" className="block rounded-full border border-slate-200 px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-sky-50 hover:text-sky-600">Contact</a></li>
+          <li className="shrink-0"><a href="#home" className="block rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-emerald-50 hover:text-emerald-700">Home</a></li>
+          <li className="shrink-0"><a href="#features" className="block rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-emerald-50 hover:text-emerald-700">Features</a></li>
+          <li className="shrink-0"><a href="#how-it-works" className="block rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-emerald-50 hover:text-emerald-700">How it works</a></li>
+          <li className="shrink-0"><a href="#pricing" className="block rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-emerald-50 hover:text-emerald-700">Pricing</a></li>
+          <li className="shrink-0"><a href="#contact" className="block rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm text-gray-700 transition-colors duration-300 hover:bg-emerald-50 hover:text-emerald-700">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-      <section id="home" className="scroll-mt-32 bg-gradient-to-l from-sky-50 to-sky-50 py-14 md:py-20">
+      <section id="home" className="scroll-mt-32 bg-gradient-to-br from-amber-50 via-emerald-50 to-cyan-50 py-14 md:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       
@@ -256,9 +256,12 @@ export default function Home() {
       <div className="max-w-xl text-center lg:text-left">
         <h1 className="mb-6 text-3xl font-bold leading-tight text-gray-900 sm:text-5xl md:text-6xl">
           Send Invitations <br className="hidden sm:block" />
-          <span className="text-blue-600">Instantly</span> with <br className="hidden sm:block" />
+          <span className="text-emerald-700">Instantly</span> with <br className="hidden sm:block" />
           Casuumaad
         </h1>
+        <p className="mb-4 inline-block rounded-full border border-amber-300 bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+          Theme Test Mode
+        </p>
 
         <p className="mb-10 text-base text-gray-600 sm:text-lg">
           Create events, manage guests, and send invitations through <br className="hidden md:block" />
@@ -270,7 +273,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => setIsFormOpen(true)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-8 py-4 font-medium text-white shadow-lg transition-colors duration-300 hover:bg-blue-700 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-8 py-4 font-medium text-white shadow-lg transition-colors duration-300 hover:bg-emerald-700 sm:w-auto"
           >
             Start Now →
           </button>
@@ -278,7 +281,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => setIsHowItWorksOpen(true)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-blue-600 px-8 py-4 font-medium text-blue-600 shadow-lg transition-colors duration-300 hover:bg-blue-50 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-amber-500 px-8 py-4 font-medium text-amber-700 shadow-lg transition-colors duration-300 hover:bg-amber-100 sm:w-auto"
           >
             ▶️ See How It Works
           </button>
@@ -327,13 +330,13 @@ export default function Home() {
                 </div>
               </div>
 
-              <button className="w-full bg-blue-600 text-white py-4 rounded-lg mt-8 font-medium hover:bg-blue-700 transition">
+              <button className="w-full bg-emerald-600 text-white py-4 rounded-lg mt-8 font-medium hover:bg-emerald-700 transition">
                 Continue to Guest List →
               </button>
               <button
                 type="button"
                 onClick={openDelivery}
-                className="mt-3 w-full rounded-lg border-2 border-blue-600 py-3 font-medium text-blue-600 transition-colors hover:bg-blue-50"
+                className="mt-3 w-full rounded-lg border-2 border-amber-500 py-3 font-medium text-amber-700 transition-colors hover:bg-amber-100"
               >
                 Send via WhatsApp / SMS
               </button>
@@ -391,7 +394,7 @@ export default function Home() {
               placeholder="Full Name"
               value={formData.fullName}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
             />
             <input
               type="email"
@@ -400,7 +403,7 @@ export default function Home() {
               placeholder="Email Address"
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
             />
             <input
               type="tel"
@@ -409,7 +412,7 @@ export default function Home() {
               placeholder="Phone Number (with country code)"
               value={formData.phone}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
             />
             <input
               type="text"
@@ -417,7 +420,7 @@ export default function Home() {
               placeholder="Event Type (Wedding, Meeting, etc.)"
               value={formData.eventType}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
             />
             <input
               type="text"
@@ -426,7 +429,7 @@ export default function Home() {
               placeholder="Event Name"
               value={formData.eventName}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
             />
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <input
@@ -435,7 +438,7 @@ export default function Home() {
                 required
                 value={formData.eventDate}
                 onChange={handleInputChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
               />
               <input
                 type="time"
@@ -443,7 +446,7 @@ export default function Home() {
                 required
                 value={formData.eventTime}
                 onChange={handleInputChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
               />
             </div>
             <select
@@ -451,7 +454,7 @@ export default function Home() {
               required
               value={formData.timezone}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
             >
               {timezoneOptions.map((tz) => (
                 <option key={tz} value={tz}>
@@ -466,7 +469,7 @@ export default function Home() {
               placeholder="Event Location"
               value={formData.location}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
             />
             <textarea
               rows="4"
@@ -474,11 +477,11 @@ export default function Home() {
               placeholder="Tell us about your event..."
               value={formData.notes}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-emerald-500"
             />
             <button
               type="submit"
-              className="w-full rounded-lg bg-blue-600 py-3 font-medium text-white transition-colors hover:bg-blue-700"
+              className="w-full rounded-lg bg-emerald-600 py-3 font-medium text-white transition-colors hover:bg-emerald-700"
             >
               Submit
             </button>
@@ -502,18 +505,18 @@ export default function Home() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-xl border border-sky-100 bg-sky-50 p-4">
-              <p className="mb-2 text-sm font-semibold text-sky-700">Step 1</p>
+            <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-4">
+              <p className="mb-2 text-sm font-semibold text-emerald-700">Step 1</p>
               <h3 className="font-bold text-gray-900">Create Event</h3>
               <p className="mt-2 text-sm text-gray-600">Add event name, date, time, and location in seconds.</p>
             </div>
-            <div className="rounded-xl border border-sky-100 bg-sky-50 p-4">
-              <p className="mb-2 text-sm font-semibold text-sky-700">Step 2</p>
+            <div className="rounded-xl border border-amber-100 bg-amber-50 p-4">
+              <p className="mb-2 text-sm font-semibold text-amber-700">Step 2</p>
               <h3 className="font-bold text-gray-900">Add Guests</h3>
               <p className="mt-2 text-sm text-gray-600">Upload your guest list and organize groups quickly.</p>
             </div>
-            <div className="rounded-xl border border-sky-100 bg-sky-50 p-4">
-              <p className="mb-2 text-sm font-semibold text-sky-700">Step 3</p>
+            <div className="rounded-xl border border-cyan-100 bg-cyan-50 p-4">
+              <p className="mb-2 text-sm font-semibold text-cyan-700">Step 3</p>
               <h3 className="font-bold text-gray-900">Send Instantly</h3>
               <p className="mt-2 text-sm text-gray-600">Send beautiful invitations through SMS and WhatsApp.</p>
             </div>
@@ -530,7 +533,7 @@ export default function Home() {
             <button
               type="button"
               onClick={goToHowItWorks}
-              className="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white transition-colors hover:bg-blue-700"
+              className="rounded-lg bg-emerald-600 px-5 py-2 font-medium text-white transition-colors hover:bg-emerald-700"
             >
               View Full Section
             </button>
@@ -566,7 +569,7 @@ export default function Home() {
             <button
               type="button"
               onClick={sendSms}
-              className="w-full rounded-lg bg-blue-600 px-4 py-3 font-medium text-white hover:bg-blue-700"
+              className="w-full rounded-lg bg-emerald-600 px-4 py-3 font-medium text-white hover:bg-emerald-700"
             >
               Send SMS
             </button>

@@ -42,7 +42,7 @@ export default function Plan({ onPlanSelect }) {
   return (
     <div>
       <section className='mt-20 px-4 text-center sm:px-6 lg:px-8'>
-        <h1 className='text-3xl font-bold sm:text-4xl'>Simple, <span className='text-blue-800'>Affordable Pricing</span></h1>
+        <h1 className='text-3xl font-bold sm:text-4xl'>Simple, <span className='text-emerald-800'>Affordable Pricing</span></h1>
         <p className='mt-2 text-gray-600'>Choose a plan and activate it instantly.</p>
       </section>
 
@@ -52,7 +52,7 @@ export default function Plan({ onPlanSelect }) {
           return (
             <section key={plan.id} className="w-full max-w-md">
               {plan.recommended && (
-                <p className='mx-auto mb-2 w-40 rounded-4xl bg-blue-700 text-center text-white'>★ Recommended</p>
+                <p className='mx-auto mb-2 w-40 rounded-4xl bg-amber-500 text-center text-white'>★ Recommended</p>
               )}
               <button
                 type="button"
@@ -61,7 +61,7 @@ export default function Plan({ onPlanSelect }) {
                   onPlanSelect?.(plan.id);
                 }}
                 className={`w-full min-h-[28rem] rounded-2xl border bg-white p-8 text-left shadow-2xl transition-all hover:shadow-xl ${
-                  isActive ? "border-2 border-sky-400 ring-2 ring-sky-200" : "border-gray-100"
+                  isActive ? "border-2 border-emerald-400 ring-2 ring-emerald-200" : "border-gray-100"
                 }`}
               >
                 <h3 className="text-center text-xl font-bold">{plan.name}</h3>
@@ -72,12 +72,12 @@ export default function Plan({ onPlanSelect }) {
                 <section className='mt-8 space-y-2'>
                   {plan.features.map((feature) => (
                     <p key={feature}>
-                      <span className="rounded bg-sky-200 text-sky-600">✓</span> {feature}
+                      <span className="rounded bg-emerald-200 text-emerald-700">✓</span> {feature}
                     </p>
                   ))}
                 </section>
                 <p className={`mt-8 rounded-lg py-4 text-center font-medium transition ${
-                  plan.recommended ? "bg-blue-700 text-white" : "bg-gray-100 text-black"
+                  plan.recommended ? "bg-emerald-600 text-white" : "bg-gray-100 text-black"
                 }`}>
                   Activate {plan.name.replace(" Plan", "")}
                 </p>
@@ -87,14 +87,14 @@ export default function Plan({ onPlanSelect }) {
         })}
       </div>
 
-      <section className="mx-auto mt-8 w-full max-w-4xl rounded-2xl border border-blue-100 bg-white p-6 shadow-lg">
-        <p className="text-sm font-semibold text-blue-700">Selected Plan</p>
+      <section className="mx-auto mt-8 w-full max-w-4xl rounded-2xl border border-emerald-200 bg-white p-6 shadow-lg">
+        <p className="text-sm font-semibold text-emerald-700">Selected Plan</p>
         <h3 className="mt-1 text-2xl font-bold text-gray-900">{activePlan.name}</h3>
         <p className="mt-2 text-gray-600">{activePlan.subtitle}</p>
         <button
           type="button"
           onClick={() => onPlanSelect?.(activePlan.id)}
-          className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+          className="mt-4 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700"
         >
           Continue with {activePlan.name}
         </button>
